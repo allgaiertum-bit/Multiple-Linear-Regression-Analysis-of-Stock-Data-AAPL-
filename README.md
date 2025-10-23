@@ -1,6 +1,6 @@
 # r4ews-project
 
-Repo zur Bearbeitung des R Projekts im Kurs EWS.
+Repo zur Bearbeitung des R Projekts im Kurs Einführung in die W-Theorie und Statistik.
 
 ## Add your files
 
