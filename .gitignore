@@ -3,4 +3,8 @@
 .RData
 .Ruserdata
 
+*.html
+*.pdf
+*_files/
+
 r4ews-project.Rproj
