@@ -8,6 +8,16 @@ format:
 
 ---
 
+```{r}
+#| include: false
+#| eval: false
+# eval false entfernen sobald der code vollstaendig ist
+library(tidyverse)
+
+data <- read_xxx("data/data-source-file.xxx")  # Beispiel für das Einlesen einer xxx Datei
+```
+
+
 # Einleitung
 
 Um PDF-Dateien zu erstellen, müsst ihr eine aktuelle Distribution von TeX installieren. Wir empfehlen die Verwendung von TinyTeX (basierend auf TexLive), das ihr mit dem folgenden Befehl installieren könnt. Gebt im Terminal ein:
