@@ -1,5 +1,8 @@
 ---
 title: "Projektbericht"
+author:
+  - "Autor 1"
+  - "Autor 2"
 format: 
   pdf:
     documentclass: scrartcl
