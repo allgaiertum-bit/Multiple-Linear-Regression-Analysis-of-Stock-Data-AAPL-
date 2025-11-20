@@ -4,8 +4,9 @@ format:
   pdf:
     documentclass: scrartcl
     number-sections: true
-    lang: de
-
+    lang: de 
+    cite-method: biblatex
+bibliography: referenzen.bib
 ---
 
 ```{r}
@@ -46,7 +47,10 @@ x * 5
 
 # Statistische Methoden
 
-Morbi fringilla orci vitae libero bibendum molestie. Duis hendrerit magna justo, vitae dapibus ante aliquam sed. Suspendisse quis mattis eros. Sed ullamcorper scelerisque diam ac ultrices. Praesent quis sapien in elit efficitur scelerisque. Donec pretium dolor non orci aliquam tincidunt. In eu urna eu risus vulputate laoreet. Cras porttitor risus non ligula sollicitudin, vitae ultricies risus dictum. Nunc sit amet eleifend turpis, porta pharetra tortor. Fusce rhoncus, augue vel bibendum fermentum, arcu nunc volutpat justo, eu volutpat ligula est id justo. Curabitur et pellentesque nisi. Cras tincidunt, sapien non molestie eleifend, libero sem blandit leo, sed tempus augue augue sed metus. Etiam vehicula rhoncus volutpat. Morbi mollis sit amet massa volutpat auctor. Nunc dictum elit sit amet metus consequat fermentum
+
+Morbi fringilla orci vitae libero bibendum molestie. Duis hendrerit magna justo, vitae dapibus ante aliquam sed. Suspendisse quis mattis eros. Sed ullamcorper scelerisque diam ac ultrices. Praesent quis sapien in elit efficitur scelerisque. Donec pretium dolor non orci aliquam tincidunt. In eu urna eu risus vulputate laoreet. Cras porttitor risus non ligula sollicitudin, vitae ultricies risus dictum. Nunc sit amet eleifend turpis, porta pharetra tortor. Fusce rhoncus, augue vel bibendum fermentum, arcu nunc volutpat justo, eu volutpat ligula est id justo. Curabitur et pellentesque nisi. Cras tincidunt, sapien non molestie eleifend, libero sem blandit leo, sed tempus augue augue sed metus. Etiam vehicula rhoncus volutpat. Morbi mollis sit amet massa volutpat auctor. Nunc dictum elit sit amet metus consequat fermentum, siehe @Rolles.
+
+
 
 
 # Ergebnisse und Schlussfolgerungen
@@ -54,3 +58,8 @@ Morbi fringilla orci vitae libero bibendum molestie. Duis hendrerit magna justo,
 Phasellus vulputate laoreet varius. Donec nec congue mauris. Phasellus accumsan eros fermentum, aliquet tortor a, suscipit nisi. Quisque magna felis, scelerisque ut mollis vitae, pellentesque ac ante. Nullam tristique pellentesque leo at interdum. Vivamus eget mi sit amet nisl rutrum cursus. Suspendisse venenatis orci id consectetur congue. Mauris suscipit lectus lobortis lacus ornare ornare. Sed eget quam sit amet ipsum iaculis lobortis. Phasellus id risus massa. Vivamus vestibulum commodo ante, eleifend ornare dui. Fusce non massa sollicitudin elit congue pulvinar. Integer volutpat mattis dui non tempor. 
 
 
+
+# Literaturverzeichnis {.unnumbered}
+
+::: {#refs}
+:::
