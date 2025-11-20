@@ -1,27 +1,46 @@
 ---
 title: "Projektbericht"
-format: pdf
+format: 
+  pdf:
+    documentclass: scrartcl
+    number-sections: true
+    lang: de
+
 ---
 
-# Quarto
+# Einleitung
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Um PDF-Dateien zu erstellen, müsst ihr eine aktuelle Distribution von TeX installieren. Wir empfehlen die Verwendung von TinyTeX (basierend auf TexLive), das ihr mit dem folgenden Befehl installieren könnt. Gebt im Terminal ein:
 
-## Running Code
+```
+quarto install tinytex
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+
+
+# Explorative Datenanalyse
+
+Cras a tellus ligula. Vivamus vitae arcu vel quam scelerisque dictum. Cras vel finibus metus, id faucibus nisi. Morbi ac lacus lorem. Donec rhoncus commodo pellentesque. Morbi aliquam tristique nibh at interdum. Donec dignissim tellus nec pharetra egestas. 
+
 
 ```{r}
-1 + 1
+
+x <- 1
+x * 5
 ```
 
 
 
-You can add options to executable code like this 
+# Statistische Methoden
 
-```{r}
+Morbi fringilla orci vitae libero bibendum molestie. Duis hendrerit magna justo, vitae dapibus ante aliquam sed. Suspendisse quis mattis eros. Sed ullamcorper scelerisque diam ac ultrices. Praesent quis sapien in elit efficitur scelerisque. Donec pretium dolor non orci aliquam tincidunt. In eu urna eu risus vulputate laoreet. Cras porttitor risus non ligula sollicitudin, vitae ultricies risus dictum. Nunc sit amet eleifend turpis, porta pharetra tortor. Fusce rhoncus, augue vel bibendum fermentum, arcu nunc volutpat justo, eu volutpat ligula est id justo. Curabitur et pellentesque nisi. Cras tincidunt, sapien non molestie eleifend, libero sem blandit leo, sed tempus augue augue sed metus. Etiam vehicula rhoncus volutpat. Morbi mollis sit amet massa volutpat auctor. Nunc dictum elit sit amet metus consequat fermentum
 
-2 * 2
-```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+# Ergebnisse und Schlussfolgerungen
+
+Phasellus vulputate laoreet varius. Donec nec congue mauris. Phasellus accumsan eros fermentum, aliquet tortor a, suscipit nisi. Quisque magna felis, scelerisque ut mollis vitae, pellentesque ac ante. Nullam tristique pellentesque leo at interdum. Vivamus eget mi sit amet nisl rutrum cursus. Suspendisse venenatis orci id consectetur congue. Mauris suscipit lectus lobortis lacus ornare ornare. Sed eget quam sit amet ipsum iaculis lobortis. Phasellus id risus massa. Vivamus vestibulum commodo ante, eleifend ornare dui. Fusce non massa sollicitudin elit congue pulvinar. Integer volutpat mattis dui non tempor. 
+
+
