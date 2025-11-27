@@ -1,14 +1,12 @@
 ---
-title: "Projektbericht"
-author:
-  - "Autor 1"
-  - "Autor 2"
+title: "Projektbericht (Gruppe xx)"
 format: 
   pdf:
     documentclass: scrartcl
     number-sections: true
     lang: de 
     cite-method: biblatex
+    mainfont: "Times New Roman"
 bibliography: referenzen.bib
 ---
 
