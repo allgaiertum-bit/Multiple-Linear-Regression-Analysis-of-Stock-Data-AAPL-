@@ -1,0 +1,54 @@
+---
+title: "Poster (Gruppe xx)"
+format: 
+  pdf:
+    documentclass: scrartcl
+    number-sections: false
+    classoption: [twocolumn, landscape]
+    lang: de 
+    papersize: a3
+    fontsize: 14pt
+    mainfont: "Times New Roman"
+    include-in-header: 
+      text: '\pagenumbering{gobble}'
+    geometry:
+      - top=0mm
+      - bottom=10mm
+      - left=20mm
+      - right=20mm
+      - heightrounded
+
+---
+
+
+::: {.callout-note icon=false}
+
+Das Format des erzeugten PDFs wird nur als A4 erkannt. Beim Drucken (z.B. auf einem der Xerox Drucker im FMI Gebäude) muss daher das Papierformat A3 gewählt werden sowie eine Skalierung, sodass die gesamt A3 Fläche ausgefüllt wird. 
+:::  
+
+# Problemstellung
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+ggplot(iris, 
+       aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
+  geom_point() + 
+  theme_minimal()
+
+```
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+
+
+# Schlussfolgerung
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
