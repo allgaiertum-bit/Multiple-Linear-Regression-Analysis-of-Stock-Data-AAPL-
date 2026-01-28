@@ -30,7 +30,6 @@ nasdaq <- filter(X_NASDAQ, Date >= as.Date("2020-01-01") & Date <= as.Date("2025
 table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enriched$close,
                 aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open, snp500_open = sap500$Open)
 
-
 #Erstellung der selben Tabelle mit kleinerem Zeitrahmen um Einfluss von Datenmenge zu illustrieren
 XLP2 <- filter(XLP, Date >= as.Date("2025-10-01") & Date <= as.Date("2025-11-26"))
 aapl_master_enriched2 <- filter(aapl_master_enriched, date >= as.Date("2025-10-01") & date <= as.Date("2025-11-26"))
@@ -40,12 +39,11 @@ table2 <- tibble(date = aapl_master_enriched2$date, aapl_close = aapl_master_enr
                  aapl_volume =  aapl_master_enriched2$log_volume, xlp_open  = XLP2$xlp_open, nasdaq_open = nasdaq2$Open,
                  snp500_open = sap5002$Open)
 
-
 #Bau der linearen Modelle
 modell <- lm(aapl_close~  aapl_volume + snp500_open + xlp_open + nasdaq_open , data=table )
 modell2 <- lm(aapl_close~  aapl_volume + snp500_open + xlp_open +  nasdaq_open, data=table2 )
 
-#Vorraussetzungen 
+#Vorraussetzungen
 
 #Linearität 
  p1 <- ggplot(table, aes(x= (aapl_volume), y = aapl_close))+geom_point()
@@ -63,7 +61,6 @@ vif(modell)
 modell2 <- lm(aapl_close~  aapl_volume + xlp_open + nasdaq_open , data=table2 )
 vif(modell2)
 
- 
 #Normalverteilung der Residuen und Homoeskadizität
 combined <- autoplot(modell,which = 2) + autoplot(modell,which= 1)
 combined
