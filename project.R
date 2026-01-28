@@ -29,6 +29,7 @@ nasdaq <- filter(X_NASDAQ, Date >= as.Date("2020-01-01") & Date <= as.Date("2025
 
 table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enriched$close,
                 aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open, snp500_open = sap500$Open)
+view(table)
 
 #Erstellung der selben Tabelle mit kleinerem Zeitrahmen um Einfluss von Datenmenge zu illustrieren
 XLP2 <- filter(XLP, Date >= as.Date("2025-10-01") & Date <= as.Date("2025-11-26"))
