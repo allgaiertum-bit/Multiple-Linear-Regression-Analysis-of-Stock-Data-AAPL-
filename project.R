@@ -7,12 +7,12 @@ library(ggfortify)
 library(car)
 library(quantmod)
 
-#importing data from Kaggle
+#Importieren der Datensätze von Kaggle
 aapl_master_enriched <- read_csv("Data/archive (2)/aapl_master_enriched.csv")
 sap500 <- read_csv("Data/archive (3)/sap500.csv")
 X_NASDAQ <- read_csv("Data/_NASDAQ.csv")
 
-#Download XLP daily
+#Herunterladen von XLP täglich von Quantmod
 getSymbols("XLP", from = "2020-01-01", to = "2026-01-23", auto.assign = TRUE)
 XLP <- XLP %>% 
   as.data.frame() %>%
@@ -41,9 +41,11 @@ table2 <- tibble(date = aapl_master_enriched2$date, aapl_close = aapl_master_enr
                  snp500_open = sap5002$Open)
 
 
-#Building linear models and checking necessary requirements
+#Bau der linearen Modelle
 modell <- lm(aapl_close~  aapl_volume + snp500_open + xlp_open + nasdaq_open , data=table )
 modell2 <- lm(aapl_close~  aapl_volume + snp500_open + xlp_open +  nasdaq_open, data=table2 )
+
+#Vorraussetzungen 
 
 #Linearität 
  p1 <- ggplot(table, aes(x= (aapl_volume), y = aapl_close))+geom_point()
