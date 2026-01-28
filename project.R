@@ -38,15 +38,17 @@ nasdaq2 <- filter(X_NASDAQ, Date >= as.Date("2025-10-01") & Date <= as.Date("202
 
 
 table <- tibble(date = aapl_master_enriched$date, xlp_open  = XLP$xlp_open, aapl_close = aapl_master_enriched$close, aapl_open = aapl_master_enriched$open, 
-                aapl_volume =  aapl_master_enriched$log_volume, nasdaq_open = nasdaq$Open,
+                aapl_volume =  aapl_master_enriched$log_volume, nasdaq_open = nasdaq$Open, snp500_open = sap500$Open,
                 aapl_ema = aapl_master_enriched$ema_5)
 table2 <- tibble(date = aapl_master_enriched2$date, aapl_close = aapl_master_enriched2$close, aapl_open = aapl_master_enriched2$open, 
                  aapl_volume =  aapl_master_enriched2$log_volume, nasdaq_open = nasdaq2$Open,
                  aapl_ema = aapl_master_enriched2$ema_5)
 
 
+#HALLOOOOOO
+
 #Building linear models and checking necessary requirements
-modell <- lm(aapl_close~  aapl_open  + aapl_volume + xlp_open + nasdaq_open , data=table )
+modell <- lm(aapl_close~  aapl_volume + snp500_open + xlp_open + nasdaq_open , data=table )
 modell2 <- lm(aapl_close~  aapl_open + aapl_volume + nasdaq_open, data=table2 )
 
 #Linearität 
@@ -58,6 +60,9 @@ modell2 <- lm(aapl_close~  aapl_open + aapl_volume + nasdaq_open, data=table2 )
  combined
 
 #Multikollinearität und einflussreiche Fälle
+vif(modell)
+#Hohe Multikollinearität zwischen SNP 500 und Nasdaq -> Nullhypothese der Unabhängigkeit muss verworden werden - Neuer Ansatz ohne SNP 500
+modell <- lm(aapl_close~  aapl_volume + xlp_open + nasdaq_open , data=table )
 vif(modell)
 vif(modell2)
  
