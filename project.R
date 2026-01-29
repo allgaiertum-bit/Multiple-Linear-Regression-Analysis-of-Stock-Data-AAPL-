@@ -52,7 +52,6 @@ combined
 modell <- lm(aapl_close~  aapl_volume + xlp_open + nasdaq_open , data=table )
 
 #Normalverteilung der Residuen und Homoeskadizität
-hist(residuals(modell), col = "steelblue") 
 plot(modell,which= 1)
 bptest(modell)
 #Da der p-Wert weit unter dem Signifikanzniveau von 0.05 liegt muss die Nullhypothese der Homoeskadizität verworfen werden
@@ -61,6 +60,7 @@ table2 <- filter(table, date >= as.Date("2025-05-26") & date <= as.Date("2025-11
 view(table2)
 modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 ) 
 bptest(modell2)
+hist(residuals(modell2), col = "steelblue", breaks = 15) 
 
 
 #Multikollinearität

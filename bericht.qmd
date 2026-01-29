@@ -1,5 +1,5 @@
 ---
-title: "Projektbericht (Gruppe xx)"
+title: "Projektbericht (Gruppe 43)"
 format: 
   pdf:
     documentclass: scrartcl
@@ -8,55 +8,88 @@ format:
     cite-method: biblatex
     mainfont: "Times New Roman"
 bibliography: referenzen.bib
+execute: 
+  echo: false
+  warning: false
+  message: false
 ---
-
-```{r}
-#| include: false
-#| eval: false
-# eval false entfernen sobald der code vollstaendig ist
-library(tidyverse)
-
-data <- read_xxx("data/data-source-file.xxx")  # Beispiel für das Einlesen einer xxx Datei
-```
 
 
 # Einleitung
+#Motivation und Forschungsfrage
+Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar.Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig, entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren. Gerade diese verborgenen Abhängigkeiten und Korrelationen machen den Aktienmarkt zu einem hochinteressanten Untersuchungsgegenstand. 
 
-Um PDF-Dateien zu erstellen, müsst ihr eine aktuelle Distribution von TeX installieren. Wir empfehlen die Verwendung von TinyTeX (basierend auf TexLive), das ihr mit dem folgenden Befehl installieren könnt. Gebt im Terminal ein:
+Vor diesem Hintergrund untersucht dieses Projekt, die Forschungsfrage, ob ein signifikanter ungerichteter linearer Zusammenhang zwischen dem Schlusskurs der Apple-Aktie (AAPL), der Entwicklung des NASDAQ Composite Index (^IXIC) sowie des sektoralen ETFs State Street Consumer Staples (XLP) besteht.
+Zur Beantwortung werden zudem die gewählten Daten mit verschiedenen explorativen statistischen Mitteln analysiert und speziell der Einfluss der Datenmenge untersucht. 
 
-```
-quarto install tinytex
+#Datenerhebung
+Die Stichprobe wurde aus verschiedenen Kaggle und Yahoo Finance Datensätzen zusammengetragen und umfasst je n = 1485 Daten gelisted nach Datum vom 01.01.2020 bis zum 25.11.2025 für die vier Variablen: täglicher closing price der Apple Aktie, tägliches volumen der gehandelten Apple Aktien, täglicher opening price des NASDAQ Composite Index und täglicher opening price des ETFs State Street Consumer Staples. Der closing price der Apple Aktie ist die abhängige Variable die durch eine lineare Funktion der übrigen erklärenden Variablen modelliert wird.
+Als weitere Stichprobe wurde ein reduzierter Datensatz mit je n= 130 Daten gewählt, um den Einfluss der Datenlage zu untersuchen. 
 
-```
-
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
-
+Der NASDAQ Composite Index wurde als Messung des Einflusses der Lage der allgemeinen Technologieindustrie gewählt, der ETF State Street Consumer Staples modelliert als Konsumindex die allgemeine ökonomische Lage und das gehandelte Volumen der Apple Aktien untersucht die Hypothese des Einflusses von der Marktaktivität. Der State Consumer Staples Index wird im folgenden mit seinem Ticker XLP abgekürzt. 
+Dabei wurden die folgenden Annahmen getroffen um ein aussagekräftiges lineares Modell aufzustellen: 
+Die Werte der erklärenden Variablen sind feste, nichtzufällige Größen. Die erklärenden Variablen umfassen alle für die Analyse wesentlichen Einflussgrößen auf die abhängige Variable. Diese Annahmen sind durch das aufgestellte lineare Modell erfüllt. (vgl. Rönz/Förster, Seite 68)
 
 # Explorative Datenanalyse
+Um ein Aussagekraft des multilinearen Regressionsmodells sicherzustellen, wurden die gewählten Daten zunächst auf vier Eigenschaften untersucht, die mit den getroffenen Annahmen vorliegen müssen, um im weiteren einen statistisch sinnvollen Hypothesentest durchzuführen. (vgl. Rönz/Förster, Seite 59-67)
 
-Cras a tellus ligula. Vivamus vitae arcu vel quam scelerisque dictum. Cras vel finibus metus, id faucibus nisi. Morbi ac lacus lorem. Donec rhoncus commodo pellentesque. Morbi aliquam tristique nibh at interdum. Donec dignissim tellus nec pharetra egestas. 
+1. Die unabhängigen Variablen benötigen eine hinreichend lineare Korrelation zu der abhängigen Variable. 
+
+Diese wurde visuell anhand der folgenden Plots untersucht, welche je eine unabhängige Variable auf der x-Achse gegen die abhängige modellieren. Dabei kann bei jeder gewählten unabhängigen Variable ein ausreichend linearer Zusammenhang festgestellt werden. Das Volumen der gehandelten Achsen muss dabei logarithmisch betrachtet werden. Es ist auffällig, dass das volumen negativ mit dem Schlusspreis korreliert ist. Entsprechend kann für das Volumen die Alternativhypothese aufgestellt werden, dass eine Erhähung des gehandelten Volumens zu einem geringeren Schlusspreis führt. Für den NASDAQ composite sowie des XLP lautet die Alternativhypothese, dass eine Erhöhung des Öffnungspreises zu einer Erhöhung des Schlusspreises der Apple Aktie führt. Die Nullhypothese ist in allen Fällen, dass die unabhängige Variable keinen signifikanten Einfluss auf den Schlusspreis der Apple Aktie hat.
 
 
 ```{r}
+#| echo: false
+p1 <- ggplot(table, aes(x= aapl_volume, y = aapl_close))+geom_point()
+p2 <- ggplot(table, aes(x= nasdaq_open, y = aapl_close))+geom_point()
+p3 <- ggplot(table, aes(x = xlp_open , y = aapl_close)) + geom_point()
+p4 <- ggplot(table, aes(x = log(vix_close), y = aapl_close))+geom_point()
+combined <-  p1 + p2 + p3 + p4
+combined
 
-x <- 1
-x * 5
+```
+2. Homoskedastizität
+Die Varianz der Residuen, also des Fehlers zwischen dem empirisch gemessenen Wert der abhängigen Variable und den ermittelten Werten, muss bei allen n statistischen Einheiten annähernd gleich und konstant sein. (vgl. Rönz/Förster, Seite 65,74). Dies kann sowohl grafisch als auch analytisch untersucht werden. 
+Hierfür wird ein Breusch-Pagan Test durchgeführt. Dieser prüft die Nullhypothese von Homoskedastizität Als Alternativhypothese ist die Heteroskedastizität der Residuen anzunehmen. Dabei wird ein Signifikanzniveau von 5% angenommen. Wie im folgenden zu erkennen ist die Nullhypothese für den gewählten Datensatz zu verwerfen, es liegt also keine Homoskedastizität vor. Dies kann durch die Größe der gewählten Stichprobe erklärt werden, da wenige große Abweichungen bereits zu einer Ablehnung der Hypothese führen, auch wenn visuell eine annähnernd ähnliche Streuungsbreite erkennbar ist. Um die Zuverlässigkeit der Analyse zu gewährleisten, wird das lineare Regressionsmodel mit einem reduzierter Datensatz mit je n= 130 Daten aufgestellt, welcher in den weiteren Analysen untersucht wird. Der Breusch Pagan Test liefert hier einen p Wert von 0.05466 welcher knapp über dem Signifikanzniveau liegt. Die Nullhypothese muss hier also nicht verworden werden. 
+```{r}
+bptest(modell2)
 ```
 
 
+3. Die Residuen sind annähernd normalverteilt
+Die Residuen, sind die Differenz zwischen ermittelten Werten der abhängigen Variablen und den empirisch gemessenen Werten. Diese werden als unabhängige Zufallsvariablen modelliert. 
+Um einen Einfluss der unabhängigen Variablen auf die Residuen auszuschließen und sicherzustellen, dass die gewählten Variablen eine hinreichende Aussagekraft besitzen, sowie dass keine Gruppierungsfaktoren in den Daten die Residuen beeinflussen, muss deren Verteilung untersucht werden. Dabei sollte eine Normalverteilung erkennbar sein. (vgl. Rönz/Förster, Seite 67)
+
+Das folgende Histogramm, zeigt eine ausreichend annähernde Normalverteilung der Residuen des linearen Modells. Die ermittelnden Werte sind ungefähr symmetrisch um den Nullpunkt, mit einer leichten Überverteilung auf der linken Seite.
+```{r}
+hist(residuals(modell2), col = "steelblue", breaks = 15) 
+```
+4. Multikorrellinearität kann ausgeschlossen werden
+Die abhängigen Variablen, dürfen untereinander keine funktionalen linearen Abhängigkeiten aufweisen. Ansonsten kann der Einfluss der einzelnen unabhängigen Variablen nicht sinnvoll untersucht werden. Dazu wird ein VIF Wert für jede Variable berechnet, welcher unter 10 liegen sollte (vgl. ). Dies ist der Fall. 
+```{r}
+#| echo: false
+vif(modell2)
+
+```
 
 # Statistische Methoden
+Als zentrale Analyse wird die lineare Korellation zwischen dem Schlusspreises der Apple Aktie und den unabhängigen Variablen untersucht. Hierzu wird zunächst ein f-Test durchgeführt, mit Signifikanzniveau 5% und den folgenden Hypothesen durchgeführt.
+Nullhypothese: Das aufgestellte Modell hat keine signifikante Aussagekraft für die Modellierung des Schlusspreises der Apple Aktie
+Alternativhypothese: Das aufgestellte Modell hat signifikante Aussagekraft für die Modellierung des Schlusspreises der Apple Aktie
+Der p-Wert von < 2.2e-16 liegt weit unter 0.05, konkret bedeutet das, dass Modell gesamt eine statistisch hinreichende lineare Modellierung des Schlusspreises liefert. 
+Zudem wird für jede Variable ein t Test durchgeführt. Die Nullhypothese ist für alle unabhängigen Variablen, dass kein signifikanter Zusammenhang zwischen der Variable und dem Schlusspreis vorliegt. Als ungerichtete Alternativhypothese wird aufgestellt: Eine Steigerung der Variable führt zu einer Steigerung des Schlusspreises. 
+Aus dem Ergebnis folgt, dass der Ablehungsbereich für den NASAQ (< 2e-16) und XLP (< 2e-16) Öffnungspreis unter dem Signifikanzniveau liegt. In beiden Fällen wird die Nullhypothese verworfen. Konkret bedeutet das, es liegt ein signifikanter linearer Zusammenhang vor. Dies ist für den NASDAQ im folgenden Modelliert. Es ist erkennbar, dass ein positiver Zusammenhang vorliegt, also dass eine Steigerung des NASDAQ Öffnungspreises zu einer Steigerung des Apple Schlusspreises führt. Konkret erkennt man dass der Einfluss des NASDAQ auf den mittleren Wert des Apple Schlusspreises, mit Faktor 7.216e-03 am stärksten ist. 
+Für das gehandelte Volumen liegt der ermittelte Wert mit 0.104 bei doppeltem Signifikanzniveau. Also muss hier die Nullhypothese angenommen werden. Das gehandelte Volumen hat keinen signifikanten messbaren Einfluss auf den Schlusspreis.
 
+```{r}
+#| echo: false
+summary(modell2)
+effect_plot(modell2, pred = nasdaq_open, interval = TRUE, plot.points = TRUE)
 
-Morbi fringilla orci vitae libero bibendum molestie. Duis hendrerit magna justo, vitae dapibus ante aliquam sed. Suspendisse quis mattis eros. Sed ullamcorper scelerisque diam ac ultrices. Praesent quis sapien in elit efficitur scelerisque. Donec pretium dolor non orci aliquam tincidunt. In eu urna eu risus vulputate laoreet. Cras porttitor risus non ligula sollicitudin, vitae ultricies risus dictum. Nunc sit amet eleifend turpis, porta pharetra tortor. Fusce rhoncus, augue vel bibendum fermentum, arcu nunc volutpat justo, eu volutpat ligula est id justo. Curabitur et pellentesque nisi. Cras tincidunt, sapien non molestie eleifend, libero sem blandit leo, sed tempus augue augue sed metus. Etiam vehicula rhoncus volutpat. Morbi mollis sit amet massa volutpat auctor. Nunc dictum elit sit amet metus consequat fermentum, siehe @Rolles.
-
-
-
+```
 
 # Ergebnisse und Schlussfolgerungen
 
-Phasellus vulputate laoreet varius. Donec nec congue mauris. Phasellus accumsan eros fermentum, aliquet tortor a, suscipit nisi. Quisque magna felis, scelerisque ut mollis vitae, pellentesque ac ante. Nullam tristique pellentesque leo at interdum. Vivamus eget mi sit amet nisl rutrum cursus. Suspendisse venenatis orci id consectetur congue. Mauris suscipit lectus lobortis lacus ornare ornare. Sed eget quam sit amet ipsum iaculis lobortis. Phasellus id risus massa. Vivamus vestibulum commodo ante, eleifend ornare dui. Fusce non massa sollicitudin elit congue pulvinar. Integer volutpat mattis dui non tempor. 
 
 
 
