@@ -62,7 +62,7 @@ view(table2)
 modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 )
 bptest(modell2)
 
-#Multikollinearität und einflussreiche Fälle
+#Multikollinearität
 vif(modell2)
 
 #Interpretation - t Test mit Nullhypothese: Der Koeffizient hat keinen signifikanten Einfluss auf die abhängige Variable
