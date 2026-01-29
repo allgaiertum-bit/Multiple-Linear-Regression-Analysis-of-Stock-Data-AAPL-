@@ -12,7 +12,7 @@ library(quantmod)
 aapl_master_enriched <- read_csv("Data/archive (2)/aapl_master_enriched.csv")
 X_NASDAQ <- read_csv("Data/_NASDAQ.csv")
 
-#Herunterladen von XLP täglich von Quantmod
+#Herunterladen der Daten des XLP von Yahoo Finance über Quantmod
 getSymbols("XLP", from = "2020-01-01", to = "2025-11-27", auto.assign = TRUE)
 XLP <- XLP %>% 
   as.data.frame() %>%
@@ -37,10 +37,10 @@ table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enric
                 vix_close = VIX$vix_close)
 
 
-#Vorraussetzungen
+#Test der Vorraussetzungen
 
 #Linearität 
-p1 <- ggplot(table, aes(x= (aapl_volume), y = aapl_close))+geom_point()
+p1 <- ggplot(table, aes(x= aapl_volume, y = aapl_close))+geom_point()
 p2 <- ggplot(table, aes(x= nasdaq_open, y = aapl_close))+geom_point()
 p3 <- ggplot(table, aes(x = xlp_open , y = aapl_close)) + geom_point()
 p4 <- ggplot(table, aes(x = log(vix_close), y = aapl_close))+geom_point()
@@ -48,19 +48,20 @@ combined <-  p1 + p2 + p3 + p4
 combined
 
 #Bau des linearen Modells
+
 modell <- lm(aapl_close~  aapl_volume + xlp_open + nasdaq_open , data=table )
 
 #Normalverteilung der Residuen und Homoeskadizität
-combined <- autoplot(modell,which = 2) + autoplot(modell,which= 1)
-combined 
+hist(residuals(modell), col = "steelblue") 
+plot(modell,which= 1)
+bptest(modell)
 #Da der p-Wert weit unter dem Signifikanzniveau von 0.05 liegt muss die Nullhypothese der Homoeskadizität verworfen werden
-#Große Datenmenge und zeitliche Korrelationen üben Einfluss aus, Testen der Nullhypothese mit kleinerem Datensatz
-#Erstellung der selben Tabelle mit kleinerem Zeitrahmen um Einfluss von Datenmenge zu illustrieren
+#Testen der Nullhypothese mit kleinerem Datensatz
 table2 <- filter(table, date >= as.Date("2025-05-26") & date <= as.Date("2025-11-26"))
 view(table2)
-#Erneuter Bp Test
-modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 )
+modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 ) 
 bptest(modell2)
+
 
 #Multikollinearität
 vif(modell2)
@@ -69,6 +70,7 @@ vif(modell2)
 summary(modell2)
 summary(modell)
 effect_plot(modell2, pred = nasdaq_open, interval = TRUE, plot.points = TRUE)
+
 
 
  

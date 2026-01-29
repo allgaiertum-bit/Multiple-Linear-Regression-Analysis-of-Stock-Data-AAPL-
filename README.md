@@ -1,7 +1,7 @@
 # R4ews Projekt
 Analyse eines zusammengestellten Datensatzes, mit Daten von:  
-
-- Kaggle: "Apple Financial Dataset"  
+Kaggle:
+- "Apple Financial Dataset"  
   [Link zum Datensatz](https://www.kaggle.com/datasets/adamvakar/apple-comprehensive-financial-dataset-1980-2026)  
   NASDAQ Composite (^IXIC)  
   [Link zum Datensatz](https://www.kaggle.com/datasets/aliraza948/nasdaq-composite-ixic)  
