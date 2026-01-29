@@ -14,28 +14,64 @@ execute:
   message: false
 ---
 
+```{r}
+#| echo: false
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(patchwork)
+library(lmtest)
+library(ggfortify)
+library(jtools)
+library(car)
+library(quantmod)
+
+#Importieren der Datensätze von Kaggle
+aapl_master_enriched <- read_csv("Data/archive (2)/aapl_master_enriched.csv")
+X_NASDAQ <- read_csv("Data/_NASDAQ.csv")
+
+#Herunterladen der Daten des XLP von Yahoo Finance über Quantmod
+getSymbols("XLP", from = "2020-01-01", to = "2025-11-27", auto.assign = TRUE)
+XLP <- XLP %>% 
+  as.data.frame() %>%
+  mutate(Date = as.Date(index(XLP))) %>%
+  select(Date, XLP.Open) %>%
+  rename(xlp_open = XLP.Open)
+aapl_master_enriched <- mutate(aapl_master_enriched, log_volume = log(volume))
+aapl_master_enriched <- filter(aapl_master_enriched, date >= as.Date("2020-01-01") & date <= as.Date("2025-11-26"))
+nasdaq <- filter(X_NASDAQ, Date >= as.Date("2020-01-01") & Date <= as.Date("2025-11-26"))
+
+table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enriched$close,
+                aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open
+            )
+table2 <- filter(table, date >= as.Date("2025-05-26") & date <= as.Date("2025-11-26"))
+modell <- lm(aapl_close~  aapl_volume + xlp_open + nasdaq_open , data=table )
+modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 ) 
+```
+
 
 # Einleitung
 #Motivation und Forschungsfrage
-Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar.Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig, entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren. Gerade diese verborgenen Abhängigkeiten und Korrelationen machen den Aktienmarkt zu einem hochinteressanten Untersuchungsgegenstand. 
+Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar. Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig, entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren. Gerade diese verborgenen Abhängigkeiten machen den Aktienmarkt zu einem hochinteressanten Untersuchungsgegenstand. 
 
-Vor diesem Hintergrund untersucht dieses Projekt, die Forschungsfrage, ob ein signifikanter ungerichteter linearer Zusammenhang zwischen dem Schlusskurs der Apple-Aktie (AAPL), der Entwicklung des NASDAQ Composite Index (^IXIC) sowie des sektoralen ETFs State Street Consumer Staples (XLP) besteht.
-Zur Beantwortung werden zudem die gewählten Daten mit verschiedenen explorativen statistischen Mitteln analysiert und speziell der Einfluss der Datenmenge untersucht. 
+Vor diesem Hintergrund untersucht dieses Projekt, die Forschungsfrage, ob ein signifikanter linearer Zusammenhang zwischen dem Schlusskurs der Apple-Aktie (AAPL), der Entwicklung des NASDAQ Composite Index (^IXIC) sowie des sektoralen ETFs State Street Consumer Staples (XLP) besteht.
+Zur Beantwortung werden zudem die gewählten Daten mit verschiedenen explorativen statistischen Mitteln analysiert.
 
 #Datenerhebung
-Die Stichprobe wurde aus verschiedenen Kaggle und Yahoo Finance Datensätzen zusammengetragen und umfasst je n = 1485 Daten gelisted nach Datum vom 01.01.2020 bis zum 25.11.2025 für die vier Variablen: täglicher closing price der Apple Aktie, tägliches volumen der gehandelten Apple Aktien, täglicher opening price des NASDAQ Composite Index und täglicher opening price des ETFs State Street Consumer Staples. Der closing price der Apple Aktie ist die abhängige Variable die durch eine lineare Funktion der übrigen erklärenden Variablen modelliert wird.
+Die Stichprobe wurde aus verschiedenen Kaggle und Yahoo Finance Datensätzen zusammengetragen und umfasst je n = 1485 Daten gelisted nach Datum vom 01.01.2020 bis zum 25.11.2025 für die vier Variablen: täglicher closing price der Apple Aktie, tägliches volumen der gehandelten Apple Aktien, täglicher opening price des NASDAQ Composite Index und täglicher opening price des ETFs State Street Consumer Staples. 
+Der closing price der Apple Aktie ist die abhängige Variable die durch eine lineare Funktion der übrigen erklärenden Variablen modelliert wird.
 Als weitere Stichprobe wurde ein reduzierter Datensatz mit je n= 130 Daten gewählt, um den Einfluss der Datenlage zu untersuchen. 
 
-Der NASDAQ Composite Index wurde als Messung des Einflusses der Lage der allgemeinen Technologieindustrie gewählt, der ETF State Street Consumer Staples modelliert als Konsumindex die allgemeine ökonomische Lage und das gehandelte Volumen der Apple Aktien untersucht die Hypothese des Einflusses von der Marktaktivität. Der State Consumer Staples Index wird im folgenden mit seinem Ticker XLP abgekürzt. 
+Der NASDAQ Composite Index wurde als Messung des Einflusses der Lage der allgemeinen Technologieindustrie gewählt, der ETF State Street Consumer Staples modelliert als Konsumindex die allgemeine ökonomische Lage und das gehandelte Volumen der Apple Aktien untersucht den Einflusses der Marktaktivität. Der State Consumer Staples Index wird im folgenden mit seinem Ticker XLP abgekürzt. 
 Dabei wurden die folgenden Annahmen getroffen um ein aussagekräftiges lineares Modell aufzustellen: 
 Die Werte der erklärenden Variablen sind feste, nichtzufällige Größen. Die erklärenden Variablen umfassen alle für die Analyse wesentlichen Einflussgrößen auf die abhängige Variable. Diese Annahmen sind durch das aufgestellte lineare Modell erfüllt. (vgl. Rönz/Förster, Seite 68)
 
 # Explorative Datenanalyse
-Um ein Aussagekraft des multilinearen Regressionsmodells sicherzustellen, wurden die gewählten Daten zunächst auf vier Eigenschaften untersucht, die mit den getroffenen Annahmen vorliegen müssen, um im weiteren einen statistisch sinnvollen Hypothesentest durchzuführen. (vgl. Rönz/Förster, Seite 59-67)
+Um ein Aussagekraft des multilinearen Regressionsmodells sicherzustellen, wurden die gewählten Daten zunächst auf vier Eigenschaften untersucht, die mit den bereits getroffenen Annahmen vorliegen müssen, um im weiteren einen statistisch sinnvollen Hypothesentest durchzuführen. (vgl. Rönz/Förster, Seite 59-67)
 
 1. Die unabhängigen Variablen benötigen eine hinreichend lineare Korrelation zu der abhängigen Variable. 
 
-Diese wurde visuell anhand der folgenden Plots untersucht, welche je eine unabhängige Variable auf der x-Achse gegen die abhängige modellieren. Dabei kann bei jeder gewählten unabhängigen Variable ein ausreichend linearer Zusammenhang festgestellt werden. Das Volumen der gehandelten Achsen muss dabei logarithmisch betrachtet werden. Es ist auffällig, dass das volumen negativ mit dem Schlusspreis korreliert ist. Entsprechend kann für das Volumen die Alternativhypothese aufgestellt werden, dass eine Erhähung des gehandelten Volumens zu einem geringeren Schlusspreis führt. Für den NASDAQ composite sowie des XLP lautet die Alternativhypothese, dass eine Erhöhung des Öffnungspreises zu einer Erhöhung des Schlusspreises der Apple Aktie führt. Die Nullhypothese ist in allen Fällen, dass die unabhängige Variable keinen signifikanten Einfluss auf den Schlusspreis der Apple Aktie hat.
+Diese wurde visuell anhand der folgenden Plots untersucht, welche je eine unabhängige Variable auf der x-Achse gegen die abhängige Variable modellieren. Dabei kann bei jeder gewählten unabhängigen Variable ein ausreichend linearer Zusammenhang festgestellt werden. Das Volumen der gehandelten Achsen muss dabei logarithmisch betrachtet werden. Es ist auffällig, dass das volumen negativ mit dem Schlusspreis korreliert ist.
 
 
 ```{r}
@@ -43,15 +79,22 @@ Diese wurde visuell anhand der folgenden Plots untersucht, welche je eine unabh�
 p1 <- ggplot(table, aes(x= aapl_volume, y = aapl_close))+geom_point()
 p2 <- ggplot(table, aes(x= nasdaq_open, y = aapl_close))+geom_point()
 p3 <- ggplot(table, aes(x = xlp_open , y = aapl_close)) + geom_point()
-p4 <- ggplot(table, aes(x = log(vix_close), y = aapl_close))+geom_point()
-combined <-  p1 + p2 + p3 + p4
+combined <-  p1 + p2 + p3
 combined
 
 ```
 2. Homoskedastizität
-Die Varianz der Residuen, also des Fehlers zwischen dem empirisch gemessenen Wert der abhängigen Variable und den ermittelten Werten, muss bei allen n statistischen Einheiten annähernd gleich und konstant sein. (vgl. Rönz/Förster, Seite 65,74). Dies kann sowohl grafisch als auch analytisch untersucht werden. 
-Hierfür wird ein Breusch-Pagan Test durchgeführt. Dieser prüft die Nullhypothese von Homoskedastizität Als Alternativhypothese ist die Heteroskedastizität der Residuen anzunehmen. Dabei wird ein Signifikanzniveau von 5% angenommen. Wie im folgenden zu erkennen ist die Nullhypothese für den gewählten Datensatz zu verwerfen, es liegt also keine Homoskedastizität vor. Dies kann durch die Größe der gewählten Stichprobe erklärt werden, da wenige große Abweichungen bereits zu einer Ablehnung der Hypothese führen, auch wenn visuell eine annähnernd ähnliche Streuungsbreite erkennbar ist. Um die Zuverlässigkeit der Analyse zu gewährleisten, wird das lineare Regressionsmodel mit einem reduzierter Datensatz mit je n= 130 Daten aufgestellt, welcher in den weiteren Analysen untersucht wird. Der Breusch Pagan Test liefert hier einen p Wert von 0.05466 welcher knapp über dem Signifikanzniveau liegt. Die Nullhypothese muss hier also nicht verworden werden. 
+Die Varianz der Residuen, also des Fehlers zwischen dem empirisch gemessenen Wert der abhängigen Variable und den ermittelten Werten, soll bei allen n statistischen Einheiten annähernd gleich und konstant sein. (vgl. Rönz/Förster, Seite 65,74). Dies kann sowohl grafisch als auch analytisch untersucht werden. 
+
+Hierfür wird ein Breusch-Pagan Test durchgeführt. Dieser prüft die Nullhypothese von Homoskedastizität. 
+Als Alternativhypothese ist die Heteroskedastizität der Residuen anzunehmen. Dabei wird ein Signifikanzniveau von 5% angenommen. (vgl R online Ding)
+
+Wie im folgenden zu erkennen ist die Nullhypothese für den gewählten Datensatz zu verwerfen, es liegt also keine Homoskedastizität vor. Dies kann durch die Größe der gewählten Stichprobe erklärt werden, da wenige große Abweichungen bereits zu einer Ablehnung der Hypothese führen, auch wenn visuell eine annähnernd ähnliche Streuungsbreite erkennbar ist. Auch wenn eine Ablehung der Nullhypothese nicht pauschale Homoelastizität implizieren muss, kann eine nicht konstante Varianz der Residuen kann allerdings im späteren t-Test zu signifkanten Änderungen im Standardfehler und damit im t Wert führen. (vgl R online Ding) 
+Um die Zuverlässigkeit der Analyse zu gewährleisten, wird das lineare Regressionsmodel mit einem reduzierter Datensatz mit je n= 130 Daten aufgestellt, welcher in den weiteren Analysen untersucht wird. 
+Der Breusch Pagan Test liefert hier einen p Wert von 0.05466 welcher knapp über dem Signifikanzniveau liegt. Die Nullhypothese muss also nicht verworden werden. 
 ```{r}
+bptest(modell)
+plot(modell,which= 1)
 bptest(modell2)
 ```
 
