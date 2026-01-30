@@ -19,12 +19,6 @@ XLP <- XLP %>%
   mutate(Date = as.Date(index(XLP))) %>%
   select(Date, XLP.Open) %>%
   rename(xlp_open = XLP.Open)
-VIX <- getSymbols("^VIX", src = "yahoo", auto.assign = FALSE)
-VIX <- VIX %>%
-  as.data.frame() %>%
-  mutate(Date = as.Date(index(VIX))) %>%
-  select(Date, VIX.Close) %>%
-  rename(vix_close = VIX.Close)
 
 #Reduzierung und Normung des Zeitraums, Aneinanderreihung der genutzten Daten in gemeinsamer Tabelle
 VIX <- filter(VIX, Date >= as.Date("2020-01-01") & Date <= as.Date("2025-11-26"))
@@ -35,6 +29,7 @@ nasdaq <- filter(X_NASDAQ, Date >= as.Date("2020-01-01") & Date <= as.Date("2025
 table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enriched$close,
                 aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open,
                 vix_close = VIX$vix_close)
+view(table)
 
 
 #Test der Vorraussetzungen
