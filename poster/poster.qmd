@@ -1,54 +1,78 @@
 ---
-title: "Poster (Gruppe xx)"
+title: "Poster (Gruppe 43)"
 format: 
   pdf:
+    pdf-engine: xelatex
     documentclass: scrartcl
-    number-sections: false
     classoption: [twocolumn, landscape]
-    lang: de 
     papersize: a3
     fontsize: 14pt
+    number-sections: false
     mainfont: "Times New Roman"
-    include-in-header: 
-      text: '\pagenumbering{gobble}'
     geometry:
       - top=0mm
       - bottom=10mm
       - left=20mm
       - right=20mm
       - heightrounded
+    include-in-header:
+      text: |
+        \usepackage{polyglossia}
+        \setmainlanguage{german}
+        \pagenumbering{gobble}  % suppress page numbers
 
 ---
+\noindent
+\begin{minipage}[t]{0.48\textwidth} % linke Spalte
+\section*{Problemstellung}
 
+Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar. Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig, entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren.  
 
-::: {.callout-note icon=false}
+Das Projekt untersucht anhand von finanziellen Daten von fünf Monaten die Zusammenhänge zwischen der Entwicklung des \textbf{Schlusskurses} (Closing Price) der \textbf{Apple Aktie (AAPL)}, dem zugehörigen Index \textbf{NASDAQ composite (IXIC)}, dem \textbf{ETF State Street Consumer Staples (XLP)} und dem \textbf{gehandelten Volumen der Apple Aktien}.  
 
-Das Format des erzeugten PDFs wird nur als A4 erkannt. Beim Drucken (z.B. auf einem der Xerox Drucker im FMI Gebäude) muss daher das Papierformat A3 gewählt werden sowie eine Skalierung, sodass die gesamt A3 Fläche ausgefüllt wird. 
-:::  
+Die zentrale These lautet, dass zwischen den untersuchten Variablen ein ungerichteter linearer Zusammenhang besteht.  
+Zur Überprüfung der These werden eine \textbf{multiple lineare Regression} sowie mehrere \textbf{Hypothesentests} durchgeführt.
 
-# Problemstellung
+\includegraphics[width=\linewidth]{Linearitaet.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\textwidth} % rechte Spalte, natürliche Höhe
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+% Oberes Grid: zwei Bilder nebeneinander
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{bp1.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{BP2.png}
+\end{minipage}
 
+\vspace{2mm}
 
-```{r}
-#| echo: false
-#| message: false
-library(tidyverse)
-ggplot(iris, 
-       aes(x = Sepal.Length, y = Petal.Length, color = Species)) +
-  geom_point() + 
-  theme_minimal()
+% Unteres Grid: zwei Bilder nebeneinander
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{Residuals_Image.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{Histogramm.png}
+\end{minipage}
 
-```
+\vspace{2mm}
 
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{Summary.png}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\includegraphics[width=\linewidth]{final_plot.png}
+\end{minipage}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+\vspace{2mm}
 
+\section*{Schlussfolgerung}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+Zusammenfassend zeigt das Modell, dass die \textbf{Preisbewegungen des NASDAQ composite} einen \textbf{signifikanten positiven linearen Zusammenhang} zur Entwicklung des Schlusspreises der Apple Aktie aufweisen. Der Einfluss auf den mittleren Schlusskurs beträgt 0,007216 und stellt den stärksten Effekt aller Variablen dar.  
+Auch eine \textbf{Erhöhung des Öffnungspreises des XLP} führt zu einem \textbf{statistisch positiven signifikanten Einfluss} auf den Apple-Schlusskurs. Das \textbf{Handelsvolumen der Apple Aktien} leistet \textbf{keinen messbaren Beitrag}.
 
-
-# Schlussfolgerung
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam porttitor pulvinar lacinia. Etiam feugiat, risus dictum imperdiet cursus, felis ante gravida ex, vitae efficitur dui mi id lacus. Ut pharetra a diam a faucibus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas rhoncus eu augue ut tempus. Duis varius efficitur tristique. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed dapibus nec arcu et malesuada. 
+\end{minipage}

@@ -60,16 +60,16 @@ modell2 <- lm(aapl_close~  aapl_volume + xlp_open +  nasdaq_open, data=table2 )
 # Einleitung
 ## Motivation und Forschungsfrage  
 
-Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar. Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren. Gerade diese verborgenen Abhängigkeiten machen den Aktienmarkt zu einem hochinteressanten Untersuchungsgegenstand.
+Finanzmärkte stellen eine besonders anspruchsvolle und zugleich hochrelevante Anwendung statistischer Analyseverfahren dar. Aktienkurse erscheinen auf den ersten Blick weitgehend zufällig, entstehen jedoch aus komplexen Wechselwirkungen zwischen einzelnen Wertpapieren, Marktindizes und sektoralen Einflussfaktoren. Gerade diese verborgenen Abhängigkeiten machen den Aktienmarkt zu einem hochinteressanten Untersuchungsgegenstand.
 
-Vor diesem Hintergrund untersucht dieses Projekt die Forschungsfrage ob ein signifikanter linearer Zusammenhang zwischen dem Schlusskurs der Apple Aktie (AAPL), der Entwicklung des NASDAQ Composite Index (^IXIC) sowie des sektoralen ETFs State Street Consumer Staples (XLP) besteht.
+Vor diesem Hintergrund untersucht dieses Projekt die Forschungsfrage, ob ein signifikanter linearer Zusammenhang zwischen dem Schlusskurs der Apple Aktie (AAPL), der Entwicklung des NASDAQ Composite Index (^IXIC) sowie des sektoralen ETFs State Street Consumer Staples (XLP) besteht.
 Zur Beantwortung der Fragestellung werden die gewählten Daten mit verschiedenen explorativen statistischen Verfahren analysiert.
 
 ## Datenerhebung  
 
 Die Stichprobe wurde aus verschiedenen Kaggle und Yahoo Finance Datensätzen zusammengetragen und umfasst jeweils n = 1485 Beobachtungen gelistet nach Datum vom 01.01.2020 bis zum 25.11.2025 für vier Variablen: täglicher Closing Price der Apple Aktie, tägliches Volumen der gehandelten Apple Aktien, täglicher Opening Price des NASDAQ Composite Index sowie täglicher Opening Price des ETFs State Street Consumer Staples.
 
-Der Closing Price der Apple Aktie stellt die abhängige Variable dar welche durch eine lineare Funktion der übrigen erklärenden Variablen modelliert wird.
+Der Closing Price der Apple Aktie stellt die abhängige Variable dar, welche durch eine lineare Funktion der übrigen erklärenden Variablen modelliert wird.
 Als zusätzliche Stichprobe wurde ein reduzierter Datensatz mit n = 130 Beobachtungen gewählt um den Einfluss der Datenlage auf die Modellschätzung zu untersuchen.
 
 Der NASDAQ Composite Index dient als Maß für die Entwicklung der allgemeinen Technologiebranche. Der ETF State Street Consumer Staples modelliert als Konsumindex die übergeordnete ökonomische Lage. Das gehandelte Volumen der Apple Aktie untersucht den Einfluss der Marktaktivität. Der State Street Consumer Staples ETF wird im Folgenden mit seinem Ticker XLP bezeichnet.
@@ -101,7 +101,7 @@ Die Varianz der Residuen, also der Differenz zwischen den empirisch gemessenen W
 
 Zur formalen Prüfung wird der Breusch-Pagan-Test eingesetzt. Dieser testet die Nullhypothese der Homoskedastizität. Die Alternativhypothese lautet, dass die Residuen heteroskedastisch sind. Es wird ein Signifikanzniveau von 5 % zugrunde gelegt (vgl. Statology3).
 
-Für den vollständigen Datensatz zeigt der Test ein signifikantes Ergebnis. Die Nullhypothese kann folglich verworfen werden, es liegt keine Homoskedastizität vor. Dies lässt sich teilweise durch die große Stichprobe erklären: Schon wenige große Abweichungen können die Ablehnung der Hypothese verursachen, selbst wenn visuell eine annähernd konstante Streuung erkennbar ist. Obwohl die Ablehnung der Nullhypothese nicht automatisch das Vorliegen extremer Heteroskedastizität impliziert, kann eine nicht konstante Varianz der Residuen die Standardfehler und damit die t-Werte im Regressionsmodell signifikant beeinflussen.
+Für den vollständigen Datensatz zeigt der Test ein signifikantes Ergebnis. Die Nullhypothese kann folglich verworfen werden, es liegt keine Homoskedastizität vor. Dies lässt sich teilweise durch die große Stichprobe erklären: Schon wenige große Abweichungen können zur Ablehnung der Hypothese führen, selbst wenn visuell eine annähernd konstante Streuung erkennbar ist. Obwohl die Ablehnung der Nullhypothese nicht automatisch das Vorliegen extremer Heteroskedastizität impliziert, kann eine nicht konstante Varianz der Residuen die Standardfehler und damit die t-Werte im Regressionsmodell signifikant beeinflussen.
 
 Um die Robustheit der Analyse sicherzustellen, wird das lineare Regressionsmodell im Folgenden auf einem reduzierten Datensatz mit n = 130 Beobachtungen aufgestellt. Für diesen Datensatz ergibt der Breusch-Pagan-Test einen p-Wert von 0,05466, der knapp über dem Signifikanzniveau liegt. Die Nullhypothese der Homoskedastizität muss hier nicht verworfen werden.
 
@@ -144,6 +144,7 @@ Zusammenfassend zeigt das Modell, dass die Preisbewegungen des NASDAQ und des XL
 ```{r}
 #| echo: false
 summary(modell2)
+effect_plot(modell2, pred = nasdaq_open, interval = TRUE)
 
 ```
 
