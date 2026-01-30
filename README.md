@@ -9,8 +9,8 @@ Kaggle:
   [Link zum Datensatz](https://de.finance.yahoo.com/quote/XLP/)
 
 ## Kurze Beschreibung des Projekts
-Das Project untersucht anhand von finanziellen Daten der letzten fünf Monate die Zusammenhänge zwischen der Entwicklung des 
-**Schlusskurses (Closing Price) der Apple Aktie (AAPL**) und dem zugehörigen Index **NASDAQ composite (^IXIC)** sowie dem ETF **State Street Consumer Staples (XLP)**.
+Das Project untersucht anhand von finanziellen Daten von fünf Monaten die Zusammenhänge zwischen der Entwicklung des 
+**Schlusskurses (Closing Price) der Apple Aktie (AAPL**), dem zugehörigen Index **NASDAQ composite (^IXIC)**, sowie dem ETF **State Street Consumer Staples (XLP)**.
 
 Die zentrale These lautet, dass zwischen den untersuchten Variablen ein **ungerichteter linearen Zusammenhang** besteht.
 Zur Überprüfung der These werden eine **multiple lineare Regression** sowie mehrere **Hypothesentests** durchgeführt. 
