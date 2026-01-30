@@ -21,14 +21,12 @@ XLP <- XLP %>%
   rename(xlp_open = XLP.Open)
 
 #Reduzierung und Normung des Zeitraums, Aneinanderreihung der genutzten Daten in gemeinsamer Tabelle
-VIX <- filter(VIX, Date >= as.Date("2020-01-01") & Date <= as.Date("2025-11-26"))
 aapl_master_enriched <- mutate(aapl_master_enriched, log_volume = log(volume))
 aapl_master_enriched <- filter(aapl_master_enriched, date >= as.Date("2020-01-01") & date <= as.Date("2025-11-26"))
 nasdaq <- filter(X_NASDAQ, Date >= as.Date("2020-01-01") & Date <= as.Date("2025-11-26"))
 
 table <- tibble(date = aapl_master_enriched$date, aapl_close = aapl_master_enriched$close,
-                aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open,
-                vix_close = VIX$vix_close)
+                aapl_volume =  aapl_master_enriched$log_volume, xlp_open  = XLP$xlp_open, nasdaq_open = nasdaq$Open)
 view(table)
 
 
@@ -38,8 +36,7 @@ view(table)
 p1 <- ggplot(table, aes(x= aapl_volume, y = aapl_close))+geom_point()
 p2 <- ggplot(table, aes(x= nasdaq_open, y = aapl_close))+geom_point()
 p3 <- ggplot(table, aes(x = xlp_open , y = aapl_close)) + geom_point()
-p4 <- ggplot(table, aes(x = log(vix_close), y = aapl_close))+geom_point()
-combined <-  p1 + p2 + p3 + p4
+combined <-  p1 + p2 + p3 
 combined
 
 #Bau des linearen Modells
