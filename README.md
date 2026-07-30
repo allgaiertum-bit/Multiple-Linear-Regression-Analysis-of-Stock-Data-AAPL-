@@ -1,4 +1,4 @@
-# Datanalyse Projekt
+# Datenalyse Projekt
 Analyse eines zusammengestellten Datensatzes, mit Daten von:  
 Kaggle:
 - "Apple Financial Dataset"  
