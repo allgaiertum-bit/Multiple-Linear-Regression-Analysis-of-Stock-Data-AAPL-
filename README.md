@@ -24,7 +24,5 @@ signifikant mit dem Schlusskurs von AAPL zusammenhängen.
 ## Autor:innen des Projektberichts
 - Allgaier Ann-Sophie
 
-## Lizenz
 
-Beschäftigt euch mit dem Thema Lizenzen (CC-BY) für wissenschaftliche Resultate.
 
