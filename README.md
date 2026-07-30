@@ -1,5 +1,6 @@
 # Datenalyse Projekt
 Analyse eines zusammengestellten Datensatzes, mit Daten von:  
+
 Kaggle:
 - "Apple Financial Dataset"  
   [Link zum Datensatz](https://www.kaggle.com/datasets/adamvakar/apple-comprehensive-financial-dataset-1980-2026)  
