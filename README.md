@@ -5,6 +5,7 @@ Kaggle:
   [Link zum Datensatz](https://www.kaggle.com/datasets/adamvakar/apple-comprehensive-financial-dataset-1980-2026)  
   NASDAQ Composite (IXIC)  
   [Link zum Datensatz](https://www.kaggle.com/datasets/aliraza948/nasdaq-composite-ixic)
+  
  Yahoo Finance:
 - State Street Consumer Staples: "XLP"  
   [Link zum Datensatz](https://de.finance.yahoo.com/quote/XLP/)
